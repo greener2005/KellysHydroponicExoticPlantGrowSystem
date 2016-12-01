@@ -12,6 +12,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using KellysHydroponicExoticPlantGrowSystem.Controllers;
+using Restup.Webserver.File;
+using Restup.Webserver.Http;
+using Restup.Webserver.Rest;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -27,9 +31,25 @@ namespace KellysHydroponicExoticPlantGrowSystem.Views
             this.InitializeComponent();
         }
 
-        private void MainPage_OnLoaded(object sender, RoutedEventArgs e)
+        private async void MainPage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var restRouteHandler = new RestRouteHandler();
+            restRouteHandler.RegisterController<PlantSensorsController>();
+            var configuration = new HttpServerConfiguration()
+                .ListenOnPort(5000)
+                .RegisterRoute("api", restRouteHandler)
+                .RegisterRoute(new StaticFileRouteHandler(@"HTML"))
+                .EnableCors();
+            try
+            {
+                var httpServer = new HttpServer(configuration);
+                await httpServer.StartServerAsync();
+            }
+            catch (Exception ex)
+            {
+                
+                throw;
+            }
         }
     }
 }
