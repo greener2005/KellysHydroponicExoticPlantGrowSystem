@@ -5,6 +5,8 @@ using Restup.Webserver.Models.Schemas;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using KellysHydroponicExoticPlantGrowSystem.Enums;
+using Newtonsoft.Json;
 
 namespace KellysHydroponicExoticPlantGrowSystem.Controllers
 {
@@ -15,18 +17,16 @@ namespace KellysHydroponicExoticPlantGrowSystem.Controllers
         public PlantSensorsController()
         {
             _plantMonitoringService = ServiceLocator.Current.GetInstance<IPlantMonitoringService>();
-            InitPlantServices().ContinueWith(t => Debug.WriteLine(t.Exception), TaskContinuationOptions.OnlyOnFaulted);
+            InitPlantServices();
         }
 
-        private async Task InitPlantServices()
+        private void InitPlantServices()
         {
-            Debug.WriteLine("test");
+            foreach (HydroPonicLights hydro in Enum.GetValues(typeof(HydroPonicLights)))
+                _plantMonitoringService.ToggleHydroponicLightOnOrOff(hydro);
         }
 
         [UriFormat("/GetPlantSensorData")]
-        public async Task<GetResponse> GetPlantSensorData()
-        {
-            return null;
-        }
+        public GetResponse GetPlantSensorData() => new GetResponse(GetResponse.ResponseStatus.OK, JsonConvert.SerializeObject(_plantMonitoringService?.HydroponicPlantData));
     }
 }

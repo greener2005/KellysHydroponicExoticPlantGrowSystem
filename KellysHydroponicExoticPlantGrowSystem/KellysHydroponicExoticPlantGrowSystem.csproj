@@ -96,7 +96,11 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controllers\PlantSensorsController.cs" />
-    <Compile Include="Interfaces\iPlantMonitoringService.cs" />
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Interfaces\IPlantMonitoringService.cs" />
+    <Compile Include="Models\HydroponicPlantData.cs" />
+    <Compile Include="Sensors\BME280.cs" />
+    <Compile Include="Sensors\MCP3008.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
