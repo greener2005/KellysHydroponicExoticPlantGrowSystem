@@ -99,7 +99,8 @@
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Interfaces\IPlantMonitoringService.cs" />
     <Compile Include="Models\HydroponicPlantData.cs" />
-    <Compile Include="Sensors\BME280.cs" />
+    <Compile Include="Sensors\BMP280Sensor33.cs" />
+    <Compile Include="Sensors\DhtTemeratureSensor.cs" />
     <Compile Include="Sensors\MCP3008.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -142,7 +143,13 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="External Refs\" />
     <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Sensors.Dht">
+      <HintPath>External Refs\Sensors.Dht.winmd</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

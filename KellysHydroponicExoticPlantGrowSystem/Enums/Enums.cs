@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KellysHydroponicExoticPlantGrowSystem.Enums
+﻿namespace KellysHydroponicExoticPlantGrowSystem.Enums
 {
     public enum MoistureSensor
     {
-        MoistureSensor1,
-        MoistureSensor2,
-        MoistureSensor3,
+        MoistureSensor1=0,
+        MoistureSensor2=1,
+        MoistureSensor3=2,
     }
     public enum HydroPonicLights
     {
-        HydroPonicLight1,
-        HydroPonicLight2,
-        HydroPonicLight3,
+        HydroPonicLight1=0,
+        HydroPonicLight2=1,
+        HydroPonicLight3=2,
     }
 
     public enum HydroPonicLightsPinMap

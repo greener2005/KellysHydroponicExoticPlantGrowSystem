@@ -17,5 +17,7 @@ namespace KellysHydroponicExoticPlantGrowSystem.Models
         public double Humidity { get; set; }
         public double BarometricPressure { get; set; }
         public double Altitude { get; set; }
+        public double DewPoint { get; set; }
+        public double HeatIndex { get; set; }
     }
 }
