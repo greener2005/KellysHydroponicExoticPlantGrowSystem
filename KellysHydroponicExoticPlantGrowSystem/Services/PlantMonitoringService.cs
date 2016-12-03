@@ -13,11 +13,12 @@ namespace KellysHydroponicExoticPlantGrowSystem.Services
     public class PlantMonitoringService : IPlantMonitoringService
     {
         private const int LIGHT_SENSOR_CHANNEL = 3;
+        private const int MAX_ANALOG_VALUE = 1023; //10 bit resolution
         private BMP280Sensor33 _bme280Sensor;
         private GpioController _gpioController;
-        private MCP3008 _mcp3008;
+        private readonly MCP3008 _mcp3008;
         private List<GpioPin> _relaySensorLightPins;
-        private DhtTemeratureSensor _dhtTemeratureSensor;
+        private readonly DhtTemeratureSensor _dhtTemeratureSensor;
 
 
         public PlantMonitoringService()
@@ -60,9 +61,10 @@ namespace KellysHydroponicExoticPlantGrowSystem.Services
                 {
                     var moistureSensor = ReadMoistureSensor(ms);
                     HydroponicPlantData.MoistureValue = moistureSensor;
+                    Debug.WriteLine($"Moisture Sensor {ms} = {HydroponicPlantData?.MoistureValue}");
                 }
                 // HydroponicPlantData.Humidity = _bme280Sensor.Humidity;
-                HydroponicPlantData.LightingLevel = _mcp3008.RawAnalogResult(LIGHT_SENSOR_CHANNEL);
+                HydroponicPlantData.LightingLevel = MAX_ANALOG_VALUE - _mcp3008.RawAnalogResult(LIGHT_SENSOR_CHANNEL);
                 //HydroponicPlantData.Altitude = await _bme280Sensor.ReadAltitude(SEA_LEVEL_LAKEVILLE_MN);
                 //HydroponicPlantData.BarometricPressure = await _bme280Sensor.ReadPreasure();
 
@@ -111,7 +113,7 @@ namespace KellysHydroponicExoticPlantGrowSystem.Services
 
                 HydroponicPlantData = new HydroponicPlantData();
 
-                _dhtTemeratureSensor.RunDHTSensor(21,_gpioController,TimeSpan.FromMilliseconds(1000));
+                _dhtTemeratureSensor.RunDHTSensor(12,_gpioController,TimeSpan.FromMilliseconds(1000));
                 _dhtTemeratureSensor.DhtValuesChanged += OnDhtTemperatureChange;
             }
             catch (Exception ex)

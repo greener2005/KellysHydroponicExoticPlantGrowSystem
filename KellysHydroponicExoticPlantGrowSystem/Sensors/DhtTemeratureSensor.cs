@@ -26,13 +26,14 @@ namespace KellysHydroponicExoticPlantGrowSystem.Sensors
         public void RunDHTSensor(int pin, GpioController gpioController, TimeSpan timeSpan)
         {
             _dht = new Dht11(gpioController.OpenPin(pin, GpioSharingMode.Exclusive), GpioPinDriveMode.Input);
+            
             _dhtTimer = ThreadPoolTimer.CreatePeriodicTimer(OnDHTTick, timeSpan);
         }
 
         private async void OnDHTTick(ThreadPoolTimer timer)
         {
             DhtReading reading;
-            reading = await _dht.GetReadingAsync().AsTask();
+            reading = await _dht.GetReadingAsync();
 
             if (!reading.IsValid)
             {
